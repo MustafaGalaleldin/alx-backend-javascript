@@ -1,9 +1,9 @@
 #!/usr/bin/node
-// db.js (Simulating a database module)
-module.exports = {
-    getUserById: (id) => {
-      // Imagine this function connects to a database
-      return { id, name: 'John Doe' };
-    },
-  };
-  
+const Utils = require('./utils');
+
+function sendPaymentRequestToAPI(totalAmount, totalShipping) {
+  const total = Utils.calculateNumber('SUM', totalAmount, totalShipping);
+  console.log(`The total is: ${total}`);
+}
+
+module.exports = sendPaymentRequestToAPI;

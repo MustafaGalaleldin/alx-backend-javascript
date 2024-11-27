@@ -1,16 +1,20 @@
 #!/usr/bin/node
 const sinon = require('sinon');
 const { expect } = require('chai');
-const db = require('./db');
+const sendPaymentRequestToAPI = require('./4-payment');
+const Utils = require('./utils');
 
-describe('Stub example', () => {
-  it('should stub getUserById to return a specific value', () => {
-    const stub = sinon.stub(db, 'getUserById').returns({ id: 1, name: 'Jane Doe' });
+describe('sendPaymentRequestToAPI with stubs', () => {
+  it('should stub calculateNumber and verify arguments and console log', () => {
+    const calculateStub = sinon.stub(Utils, 'calculateNumber').returns(10);
+    const consoleSpy = sinon.spy(console, 'log');
 
-    const user = db.getUserById(1);
-    expect(user).to.deep.equal({ id: 1, name: 'Jane Doe' });
+    sendPaymentRequestToAPI(100, 20);
 
-    // Restore the original function
-    stub.restore();
+    expect(calculateStub.calledOnceWithExactly('SUM', 100, 20)).to.be.true;
+    expect(consoleSpy.calledOnceWithExactly('The total is: 10')).to.be.true;
+
+    calculateStub.restore();
+    consoleSpy.restore();
   });
 });
